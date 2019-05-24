@@ -1,1 +1,0 @@
-from urlseed.ToGetCompanyImportInfo import ToGetCompanyImportInfo

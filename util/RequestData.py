@@ -7,13 +7,14 @@ class RequestData:
         self.methods = None;
         self.params = None;
         self.data=None;
+        self.queryString=None;
         self.json = None;
         self.type = None;
-    def success(self):
+    def success(self,data):
         pass
-    def error(self):
+    def error(self,data):
         pass
-    def iserror(self):
+    def iserror(self,data):
         pass
     def generate(self):
         

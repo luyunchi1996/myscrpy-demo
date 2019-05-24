@@ -2,6 +2,24 @@ import requests;
 import json;
 from util.RequestData import RequestData;
 from multiprocessing import Process,JoinableQueue;
+from util import RequestFactory
+import time
+
+downInUrlQueue = JoinableQueue();
+requestFactory = RequestFactory();
+def requestFactoryProcess():
+      for rd in requestFactory.requestInstance():
+            downInUrlQueue.put(rd)
+      downInUrlQueue.join()
+def downLoadProcess(downInUrlQueue):
+      while True:
+            res = downInUrlQueue.get()
+            if res is None:break
+            d=DownLoad(requestData=res);
+            d.downData();   
+            downInUrlQueue.task_done()
+            time.sleep(0.2)
+
 
 class DownLoad():
     data=""
@@ -30,7 +48,20 @@ class DownLoad():
                 if self.requestData.iserror(self.data):
                     parse = self.parseData()
                     self.state = self.requestData.success(parse())
-                    
+                    print(type(self.state))
+
+
+                    print()
+                    # downd =Process(target=downLoadProcess,args=(downInUrlQueue,))
+                    # downd2 =Process(target=downLoadProcess,args=(downInUrlQueue,)) 
+                    # downd.start()
+                    # downd2.start()
+                    # requestFactoryProcess()
+                    # downInUrlQueue.put(None)
+                    # downd.join()
+                    # downd2.join()
+
+
                 else:
                     self.state = self.requestData.error(self.requestData)
                         

@@ -12,14 +12,13 @@ class ToGetCompanyImportInfo(RequestData):
         self.json = None;
 
     def success(self,data):
-        
-        pass
+        return True
     def error(self,data):
         pass
     def iserror(self,data):
         return True;
     def generate(self):
-        for i in range(0,1000):
+        for i in range(0,2):
             self.params ={
                 "currentPage":i
             }

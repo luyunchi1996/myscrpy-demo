@@ -8,7 +8,7 @@ def requestFactoryProcess():
       for rd in requestFactory.requestInstance():
             seedUrlQueue.put(rd)
             print("set:",rd)
-  
+      print("join")
       seedUrlQueue.join()
 def downLoadProcess(seedUrlQueue):
       while True:
@@ -16,10 +16,8 @@ def downLoadProcess(seedUrlQueue):
             if res is None:break
             d=DownLoad(requestData=res);
             d.downData();   
-            print("get:",res)
+            
             seedUrlQueue.task_done()
-            # time.sleep(0.2)
-
 
 
 def main():

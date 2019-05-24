@@ -1,6 +1,4 @@
 from lib.RequestData import RequestData
-from lib.RequestFactory import testdemo
-@testdemo
 class ToGetCompanyImportInfo(RequestData):
 
     def __init__(self):

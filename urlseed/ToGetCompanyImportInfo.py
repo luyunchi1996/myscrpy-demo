@@ -12,6 +12,7 @@ class ToGetCompanyImportInfo(RequestData):
         self.json = None;
 
     def success(self,data):
+        
         pass
     def error(self,data):
         pass

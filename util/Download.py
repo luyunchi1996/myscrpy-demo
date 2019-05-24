@@ -1,6 +1,8 @@
 import requests;
 import json;
 from util.RequestData import RequestData;
+from multiprocessing import Process,JoinableQueue;
+
 class DownLoad():
     data=""
     encoding=""
@@ -28,6 +30,7 @@ class DownLoad():
                 if self.requestData.iserror(self.data):
                     parse = self.parseData()
                     self.state = self.requestData.success(parse())
+                    
                 else:
                     self.state = self.requestData.error(self.requestData)
                         

@@ -1,24 +1,16 @@
 import requests;
 import json;
 from util.RequestData import RequestData;
-from multiprocessing import Process,JoinableQueue;
+from multiprocessing import Process
+import multiprocessing
+
 from util import RequestFactory
 import time
 
-downInUrlQueue = JoinableQueue();
-requestFactory = RequestFactory();
-def requestFactoryProcess():
-      for rd in requestFactory.requestInstance():
-            downInUrlQueue.put(rd)
-      downInUrlQueue.join()
-def downLoadProcess(downInUrlQueue):
-      while True:
-            res = downInUrlQueue.get()
-            if res is None:break
-            d=DownLoad(requestData=res);
-            d.downData();   
-            downInUrlQueue.task_done()
-            time.sleep(0.2)
+
+def funcs(res):
+    d = DownLoad(requestData=res);
+    d.downData();
 
 
 class DownLoad():
@@ -48,26 +40,16 @@ class DownLoad():
                 if self.requestData.iserror(self.data):
                     parse = self.parseData()
                     self.state = self.requestData.success(parse())
-                    print(type(self.state))
-
-
-                    print()
-                    # downd =Process(target=downLoadProcess,args=(downInUrlQueue,))
-                    # downd2 =Process(target=downLoadProcess,args=(downInUrlQueue,)) 
-                    # downd.start()
-                    # downd2.start()
-                    # requestFactoryProcess()
-                    # downInUrlQueue.put(None)
-                    # downd.join()
-                    # downd2.join()
-
-
+                    types = type(self.state)
+                    if  types.__name__ != 'bool':
+                        pass
                 else:
                     self.state = self.requestData.error(self.requestData)
                         
                 # self.data = response.text;       
             else:
-                print("retrydown:",self.requestData.url," retryTimes:",retryTimes);
+                print("404-retrydown:",self.requestData.url," retryTimes:",retryTimes);
+                
                 retryTimes-=1
                 if retryTimes == 0:
                     self.state = False
@@ -75,8 +57,9 @@ class DownLoad():
                     self.state = self.requestData.error(self.requestData)
                 else:
                     self.downData(retryTimes=retryTimes,**kwargs)
-        except (BaseException):
-            print("retrydown:",self.requestData.url," retryTimes:",retryTimes);
+        except BaseException as e:
+            print(e)
+            print("except-retrydown:",self.requestData.url," retryTimes:",retryTimes);
             retryTimes-=1
             if retryTimes == 0:
                 self.state = False

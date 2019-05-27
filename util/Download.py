@@ -72,6 +72,7 @@ class DownLoad():
             types = type(self.state)
             if  types.__name__ != 'bool':
                 return self.state
+            return True
         else:
             return self.requestData.error(self.requestData)
     

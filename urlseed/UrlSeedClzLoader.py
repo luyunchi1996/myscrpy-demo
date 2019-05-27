@@ -1,4 +1,4 @@
-from urlseed.ToGetLawyerInfo import ToGetLawyerInfo;
+from urlseed.GetLawyerInArea import GetLawyerInArea;
 
 def getClassList():
-    return [ToGetLawyerInfo]
+    return [GetLawyerInArea]

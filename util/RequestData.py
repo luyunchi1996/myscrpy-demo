@@ -5,6 +5,7 @@ class RequestData:
         self.taskName="";
         self.url = None;
         self.methods = None;
+        self.title ="";
         self.params = None;
         self.data=None;
         self.queryString=None;
@@ -17,7 +18,6 @@ class RequestData:
     def iserror(self,data):
         pass
     def generate(self):
-        
         pass
 
     

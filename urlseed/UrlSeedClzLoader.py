@@ -1,4 +1,4 @@
-from urlseed.ToGetCompanyImportInfo import ToGetCompanyImportInfo;
+from urlseed.ToGetLawyerInfo import ToGetLawyerInfo;
 
 def getClassList():
-    return [ToGetCompanyImportInfo]
+    return [ToGetLawyerInfo]

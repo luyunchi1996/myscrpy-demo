@@ -1,0 +1,283 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta name="renderer" content="webkit|ie-comp|ie-stand">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>法律服务行业信用信息平台 - 上海司法行政</title>
+    
+
+
+  <link rel="stylesheet" href="/prototype/justice-xyxx/pkg/common.css" />
+  <link rel="stylesheet" href="/prototype/justice-xyxx/pkg/modules.css" />
+    <script type="text/javascript">
+	    function doFilter(paraName, value) {
+			document.getElementById(paraName).value = value;
+			document.getElementById("searchForm").submit();
+		}
+    </script>
+</head>
+<body>
+  
+
+
+<div  class="header">
+  <div class="wrapper clearfix">
+    <a href="index.jsp" class="logo"></a>
+    <ul class="nav clearfix">
+      <li><a href="index.jsp" >平台首页</a></li>
+      <li><a href="subjects.jsp"  class="active">信用主体</a></li>
+      <li><a href="credits.jsp" >信用信息</a></li>
+     
+      <li><a href="faq.jsp" >帮助中心</a></li>
+    </ul>
+
+  </div>
+</div>
+<div class="wrapper">
+  <ul class="breadcrumb">
+    <li><a href="index.jsp">首页</a></li>
+    <li><a href="subjects.jsp">信用主体</a></li>
+    <li><a href="#">律师</a></li>
+    <li>列表</li>
+  </ul>
+  <div class="framework">
+    <div class="framework-block">
+      <dl class="filter">
+        <dt>主体类型:</dt>
+        <dd>
+          <ul class="filter-list">
+            <li><a href="javascript:doFilter('typeId', 'All');" >全部</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', '10d341aea6674146b36dd23c25090f04');"  class="active">律师</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', '5fee0b6090ee4f48910cb495e35f79c1');" >公证员</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', '23683594b4234d9c93a579cef626c70c');" >法律服务工作者</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', '78179ec654b64685af86c739cae1330d');" >司法鉴定人</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', '41cb822a0fcd46dda5af6da58283b35d');" >律师事务所</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', '807c7377a8084681a22722758beaad26');" >公证处</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', '319876f2b8104b0b8d5844d59c8c5407');" >司法鉴定所</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', '867c8ba6e12e4acf89f30aa53ade4633');" >法律服务所</a></li>
+			 
+				<li><a href="javascript:doFilter('typeId', 'f15550c6c0154983ab3a3cbfcffe3db2');" >法援机构</a></li>
+			 
+          </ul>
+        </dd>
+        <dt>所在区:</dt>
+        <dd>
+          <ul class="filter-list">
+            <li><a href="javascript:doFilter('zoneId', 'All');"  class="active" >全部</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51dbeb940cf97ae8b54f38d306d');" >黄浦</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d261c4710846dbc9a8a7be794');" >徐汇</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d569248ea87da1412ca0a1985');" >长宁</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51dbfda482abe4a511ea8e3a62c');" >静安</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51db3c648ef9237fcce442e6e5a');" >普陀</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d2db246aeaafcc5606ae9a8a5');" >虹口</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d56584d1f8b36da835d0a2c61');" >杨浦</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d8a574b4087abe36c6062bc91');" >闵行</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d98cb417bbc52f588527fc3a1');" >宝山</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51db68a40758d1482cc482e4f74');" >嘉定</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51ddf814505b95537bc6c4aa293');" >浦东</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51dd74d475b9ed4afb2e7cdca1f');" >金山</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d660d45c6834dfad0f7c48109');" >松江</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d0bb54ab4a8e2196ec401830c');" >青浦</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d7077471bbf18ae5a038869da');" >奉贤</a></li>
+            
+            	<li><a href="javascript:doFilter('zoneId', 'eab9e51d6f90491da45d0223a3c3b176');" >崇明</a></li>
+            
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <div class="framework-block">
+      <div class="search-bar">
+        <div class="list-count">全部主体信息共 33099条</div>
+        <form id="searchForm" class="search-form clearfix" method="get">
+        	<input type="hidden" id="typeId" name="typeId" value="10d341aea6674146b36dd23c25090f04"/>
+      		<input type="hidden" id="zoneId" name="zoneId" value="All"/>
+          <input type="text" name="partWord" value="" placeholder="请输入主体名称或执业证号" class="form-control">
+          <button class="form-submit button">检索</button>
+        </form>
+      </div>
+    </div>
+    <div class="framework-block">
+      <ul class="multi-list">
+      		
+				 <li>
+		          <a href="subject.jsp?subjectId=1dd45a7ea0764badbd83752f5bfabfd1" class="multi-item">
+		            <div class="avatar" style="background-image:url(http://credit.sfj.sh.gov.cn/service/rest/tk.File/daa60019c235c986f60458e535159a7d/view);"></div>
+		            <div class="data">
+		              <h3>张晓梅<small class="tag blue">律师</small></h3>
+		              <p class="data-info"><span>执业证号:</span>0919942208652</p>
+		              <p class="data-info"><span>执业机构:</span>上海德载中怡律师事务所</p>
+		            </div>
+		            <div class="credit">
+		            
+		            	<span >失信信息<strong>0</strong></span>
+		            
+		              <span>其他信息<strong>0</strong></span>
+		            </div>
+		          </a>
+        		</li>
+				
+				 <li>
+		          <a href="subject.jsp?subjectId=1dd45a7e56c5445680f97e003debaa89" class="multi-item">
+		            <div class="avatar" style="background-image:url(http://credit.sfj.sh.gov.cn/service/rest/tk.File/52b9be4e4d44cf5cbc2971e499a48d24/view);"></div>
+		            <div class="data">
+		              <h3>殷洁<small class="tag blue">律师</small></h3>
+		              <p class="data-info"><span>执业证号:</span>13101199820236377</p>
+		              <p class="data-info"><span>执业机构:</span>上海市昆仑律师事务所</p>
+		            </div>
+		            <div class="credit">
+		            
+		            	<span >失信信息<strong>0</strong></span>
+		            
+		              <span>其他信息<strong>0</strong></span>
+		            </div>
+		          </a>
+        		</li>
+				
+				 <li>
+		          <a href="subject.jsp?subjectId=1dd45a7e4d484bb7b5901244015136ad" class="multi-item">
+		            <div class="avatar" style="background-image:url(http://credit.sfj.sh.gov.cn/service/rest/tk.File/aebc43f505e6c221afeb37ac66ed1b49/view);"></div>
+		            <div class="data">
+		              <h3>谢保军<small class="tag blue">律师</small></h3>
+		              <p class="data-info"><span>执业证号:</span>0920071209203</p>
+		              <p class="data-info"><span>执业机构:</span>上海国策律师事务所</p>
+		            </div>
+		            <div class="credit">
+		            
+		            	<span >失信信息<strong>0</strong></span>
+		            
+		              <span>其他信息<strong>0</strong></span>
+		            </div>
+		          </a>
+        		</li>
+				
+				 <li>
+		          <a href="subject.jsp?subjectId=1dd45a7ed0104c30969089f4b6ac531b" class="multi-item">
+		            <div class="avatar" style="background-image:url(http://credit.sfj.sh.gov.cn/service/rest/tk.File/3d77ad66530c49d0aff1cf3caabf9dd3/view);"></div>
+		            <div class="data">
+		              <h3>张苓薇<small class="tag blue">律师</small></h3>
+		              <p class="data-info"><span>执业证号:</span>13101201521702281</p>
+		              <p class="data-info"><span>执业机构:</span>上海华理律师事务所</p>
+		            </div>
+		            <div class="credit">
+		            
+		            	<span >失信信息<strong>0</strong></span>
+		            
+		              <span>其他信息<strong>0</strong></span>
+		            </div>
+		          </a>
+        		</li>
+				
+				 <li>
+		          <a href="subject.jsp?subjectId=1dd45a7eaa9645758b0cc1d3256a41b1" class="multi-item">
+		            <div class="avatar" style="background-image:url(http://credit.sfj.sh.gov.cn/service/rest/tk.File/4fe85f266e834a6590ef12763f514352/view);"></div>
+		            <div class="data">
+		              <h3>黄晶<small class="tag blue">律师</small></h3>
+		              <p class="data-info"><span>执业证号:</span>13101201121779981</p>
+		              <p class="data-info"><span>执业机构:</span>上海瀛泰律师事务所</p>
+		            </div>
+		            <div class="credit">
+		            
+		            	<span >失信信息<strong>0</strong></span>
+		              <span>其他信息<strong>0</strong></span>
+		            </div>
+		          </a>
+        		</li>
+				     		
+      </ul>
+      
+
+<div class="pagination">
+		
+		<a  href="?zoneId=All&zoneId=All&typeId=10d341aea6674146b36dd23c25090f04&typeId=10d341aea6674146b36dd23c25090f04&page=1" >上一页</a>
+		
+		<a href="?zoneId=All&zoneId=All&typeId=10d341aea6674146b36dd23c25090f04&typeId=10d341aea6674146b36dd23c25090f04&page=1">1</a><a href='#' class="active">2</a><a href="?zoneId=All&zoneId=All&typeId=10d341aea6674146b36dd23c25090f04&typeId=10d341aea6674146b36dd23c25090f04&page=3">3</a><a href="?zoneId=All&zoneId=All&typeId=10d341aea6674146b36dd23c25090f04&typeId=10d341aea6674146b36dd23c25090f04&page=4">4</a>
+		<a  href="?zoneId=All&zoneId=All&typeId=10d341aea6674146b36dd23c25090f04&typeId=10d341aea6674146b36dd23c25090f04&page=3">下一页</a>
+		
+</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="footer">
+  	 
+  <p>徐汇区建国西路648号<span>电话：021－24029009</span><span>沪ICP备05000169号-3</span></p>
+  <p>上海市司法局 主办 <a href="/feedback.jsp" class="feedback" data-toggle="modal">问题反馈</a> 
+  
+    
+  	</p>
+  	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?1b11054edbfeeec616c8b1430e7c0404";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+  	
+</div>
+<script src="/prototype/justice-xyxx/static/lib/mod.js"></script>
+<script type="text/javascript">/*resourcemap*/
+require.resourceMap({
+  "res": {
+    "modules/lib/jquery.jump": {
+      "url": "/prototype/justice-xyxx/static/lib/jquery.jump.js",
+      "type": "js",
+      "pkg": "p4"
+    },
+    "modules/lib/readmore.min": {
+      "url": "/prototype/justice-xyxx/static/lib/readmore.min.js",
+      "type": "js",
+      "pkg": "p4"
+    }
+  },
+  "pkg": {
+    "p4": {
+      "url": "/prototype/justice-xyxx/pkg/modules.js",
+      "type": "js"
+    }
+  }
+});</script>
+<script type="text/javascript" src="/prototype/justice-xyxx/pkg/components.js"></script>
+<script type="text/javascript" src="/prototype/justice-xyxx/pkg/aio.js"></script>
+<script>
+  require('components/bootstrap/modal');
+
+  var footer = require('modules/app/main');
+
+  footer.parsley.init('.feedback-form');
+</script>
+</body>
+</html>

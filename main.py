@@ -20,12 +20,11 @@ def func(res):
         return subRequestFactory
     else:
         return True
-    # print("func->",subQ.empty(),subQ.qsize())
 def seedUrlProcess(subQueue):
     pool = multiprocessing.Pool(processes = 4);
     result=None
     for rd in requestFactory.requestInstance():
-    #    result.append(pool.apply_async(func,(rd,)))
+
          result = pool.apply_async(func,(rd,))
          if isinstance(result.get(),RequestFactory):
              subrf = result.get()
@@ -54,13 +53,8 @@ def subSeedUrlProcss(q,eFlag):
             subrf = result.get()
             for rf in subrf.requestInstance():
                 q.put(rf)
-
     pools.close()
     pools.join()   
-
-
-
-
 
 
 

@@ -81,7 +81,11 @@ class ToGetLawyerDetail(RequestData):
         urlList.append(toGetOfficeDetail)
         toGetByte = ToGetByte(url=avtarimg,fileName=lawyer.OID+".png")
         urlList.append(toGetByte)
-        return urlList
+        
+        return {
+            "datas":[lawyer],
+            "urlList":urlList
+        }
 
     def error(self,data):
         return True;

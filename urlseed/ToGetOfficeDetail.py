@@ -59,7 +59,7 @@ class ToGetOfficeDetail(RequestData):
         lawyerOffice.CityCode = self.areaname
         print(keyMap)
         return {
-            L
+            "datas":[lawyerOffice]
         }
 
 

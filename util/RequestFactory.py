@@ -23,7 +23,7 @@ class RequestFactory(RequestData):
                     requestData.__setattr__(key,value)
                 yield requestData  
     def requestInstance(self):
-        while len(self.urlSeedList) !=0:
+        while  self.urlSeedList  is not None and len(self.urlSeedList) !=0:
             clz = self.urlSeedList.pop()
             self.urlseed= clz;
             for o in  self.setRequestData():

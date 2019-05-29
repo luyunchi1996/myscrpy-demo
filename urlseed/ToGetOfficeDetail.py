@@ -19,38 +19,49 @@ class ToGetOfficeDetail(RequestData):
         self.areaname = areaname
     def success(self,data):
         soup = BeautifulSoup(data.data, "html.parser")
-        multiItem = soup.find(name="div", attrs={"class": "multi-item"});
-        infoList = soup.find(name="ul", attrs={"class": "info-list"});
-        lis = infoList.find_all(name="li")
-
-        dizhi = lis[1].contents[1]
-        tongyicode = lis[5].contents[1]
-        cuanzen = lis[9].contents[1]
-        lianxitel = lis[10].contents[1]
-
-        datas = multiItem.find(name="div", attrs={"class": "data"});
-        name = datas.find(name="h3").contents[0]
-
-        dataInfos = datas.find_all(name="p", attrs={"class": "data-info"})
-        certNo = dataInfos[0].contents[1]
+        userInfo =soup.find(name="dl",attrs={"class":"user-info"})
+        name = userInfo.find(name="dd",attrs={"class":"name"}).string
+        name = str(name).replace("\n","").strip()
+        keyMap ={}    
+        infos = userInfo.find_all(name="dd",attrs={"class":"info"})
+        for dd in infos:
+            label = dd.contents[1].string
+            label = str(label).replace("：","").strip()
+            value = dd.contents[2]
+            if isinstance(value,bs4.element.Tag):
+                if str(value.name).__eq__("a"):
+                    value = str(value["href"])
+                else:
+                    value = None
+            else:
+                value = str(value).replace("\n","").strip()
+            keyMap[label]=value
+        infoList =soup.find(name="ul",attrs={"class":"info-list"})
+        infolis = infoList.find_all(name="li")
+   
+        for li in infolis:
+            label = li.contents[0].string
+            label = str(label).replace("：","").strip()
+            value = li.contents[1].replace("\n","")
+            value = value.strip()
+            keyMap[label]=value   
+        keyObj ={
+            '执业证号': 'certNO', 
+            '通讯地址': 'Address',  
+            '联系电话': 'Tell',
+        }
         lawyerOffice = LawyerOffice()
+        urlList = []
+        for key in keyObj:
+            lawyerOffice.__setattr__(keyObj[key],keyMap[key])
+        lawyerOffice.OfficeName = name
         lawyerOffice.OID = self.id
-        lawyerOffice.OfficeName =name
-        lawyerOffice.Address = dizhi
         lawyerOffice.CityCode = self.areaname
-        lawyerOffice.Tell = lianxitel
-        lawyerOffice.certNO = certNo
-        lawyerOffice.socialCode = tongyicode
-        sqFind = SqlCreate(entitys=lawyerOffice, primaryKey="OID", keyFilter=["OID"], autoSubLine=False,
-                           tableName="t_lawoffice").createSelect().addQuerys("OID", "=", lawyerOffice.OID).getSql()
-        sso = SimpleSqlOpeator(ip="192.168.196.128", port=3306, user="root", pwd="123456", dbname="lawyer_scrapy")
-        sqlresult = sso.executeSql(sqFind, result="one")
-        if sqlresult == None:
-            sqInsert = SqlCreate(entitys=lawyerOffice, primaryKey="OID", autoSubLine=False,tableName="t_lawoffice").createInsert().getSql()
-            sso.executeSql(sqInsert,method="Insert")
-        sso.commit()
-        sso.close()
-        return True
+        print(keyMap)
+        return {
+            L
+        }
+
 
     def error(self,data):
         return True;

@@ -6,28 +6,33 @@ from urlseed.ToGetLawyerInfo import ToGetLawyerInfo
 class GetPageSize(RequestData):
     def __init__(self,zoneid="All",areaName=""):
         super(RequestData).__init__()
-        self.url ="https://credit.justice.gov.cn/subjects.jsp"
+        self.url ="http://credit.lawyers.org.cn/lawyer-list.jsp"
         self.methods="GET"
 
         self.type="html"
         self.queryString = None
         self.data=None;
         self.params = {
-            "zoneId": zoneid,
-            "typeId": "10d341aea6674146b36dd23c25090f04"
+            "zoneCode": zoneid,
         };
         self.areaName = areaName
         self.json = None;
-
-        pass
+        self.zoneId = zoneid
     def success(self,data):
         soup = BeautifulSoup(data.data, "html.parser")
-        listcount = soup.find(name="div",attrs={"class":"list-count"}).string
-        listcount = listcount.split("共")[1].replace("条","").strip()
-        count = int(listcount)
-        zoneid = self.params["zoneId"]
-        glf = ToGetLawyerInfo(zoneid=zoneid,areaname=self.areaName,count=count)
-        return  [glf]
+        h4 = soup.find(name="h4",attrs={"class":"list-title"})
+        title = str(h4.string)
+        count = title.split(" ")[1]
+        # listcount = soup.find(name="div",attrs={"class":"list-count"}).string
+        # listcount = listcount.split("共")[1].replace("条","").strip()
+        # count = int(listcount)
+        # zoneid = self.params["zoneId"]
+        urlList = []
+        for  i in range(1,int(count)):
+            glf = ToGetLawyerInfo(zoneid=self.zoneId,areaname=self.areaName,count=int(count))
+            glf.params["page"] = i
+            urlList.append(glf)
+        return urlList
 
 
     def error(self,data):

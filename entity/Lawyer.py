@@ -3,6 +3,7 @@ class Lawyer:
         self.OID ="";
         self.LawyerName=""
         self.CityCode = ""
+        self.Sex=""
         self.Age = ""
         self.WorkCardNumber=""
         self.LawOfficeOID=""

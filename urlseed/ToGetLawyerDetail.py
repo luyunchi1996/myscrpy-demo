@@ -6,9 +6,11 @@ from urlseed.ToGetOfficeDetail import  ToGetOfficeDetail;
 from  util.SqlCreate import SqlCreate;
 from  entity.Lawyer import Lawyer;
 from util.MySqlOperator import SimpleSqlOpeator;
+from urlseed.ToGetImage import ToGetByte;
+
 
 class ToGetLawyerDetail(RequestData):
-    def __init__(self,url="",id="",areaname = "",imageUrl=""):
+    def __init__(self,url="",id="",areaname = ""):
         super(ToGetLawyerDetail).__init__()
         self.url =url
         self.id = id
@@ -19,52 +21,67 @@ class ToGetLawyerDetail(RequestData):
         self.params = None
         self.json = None;
         self.areaname= areaname;
-        self.imageUrl = imageUrl;
     def success(self,data):
         soup = BeautifulSoup(data.data, "html.parser")
-        multiItem = soup.find(name="div", attrs={"class": "multi-item"});
-        infoList = soup.find(name="ul",attrs={"class": "info-list"});
-        lis = infoList.find_all(name="li")
-        sex = lis[0].contents[1]
-        age = lis[1].contents[1]
-        mingzu = lis[2].contents[1]
-        zhenzhimianmao = lis[3].contents[1]
-        xueli = lis[4].contents[1]
-        zhiyeliebei = lis[6].contents[1]
-        urllist = []
+        userInfo =soup.find(name="dl",attrs={"class":"user-info"})
 
-        datas = multiItem.find(name="div",attrs={"class":"data"});
-        name = datas.find(name="h3").contents[0]
-        nameType = datas.find(name="h3").contents[1].contents[0]
-        dataInfos = datas.find_all(name="p",attrs={"class":"data-info"})
-        certNo = dataInfos[0].contents[1]
-        officeName =dataInfos[1].contents[1].contents[0]
-        officeDetailUrl = dataInfos[1].contents[1]["href"]
-        officeDetailID = officeDetailUrl.split("=")[1]
-        urlPath  = "https://credit.justice.gov.cn/"+officeDetailUrl
-        tgod = ToGetOfficeDetail(url=urlPath,id=officeDetailID,areaname=self.areaname)
-        lawyer = Lawyer()
-        lawyer.OID = self.id
-        lawyer.Age = age;
+        avtar = userInfo.find(name="dt",attrs={"class":"avatar"})
+        avtarimg = avtar.find(name="img")['src']
+        avtarimg = str(avtarimg)
+        name = userInfo.find(name="dd",attrs={"class":"name"}).string
+        name = str(name).replace("\n","").strip()
+        keyMap ={}    
+        infos = userInfo.find_all(name="dd",attrs={"class":"info"})
+        for dd in infos:
+            label = dd.contents[0].string
+            label = str(label).replace("：","").strip()
+            value = dd.contents[1]
+            if isinstance(value,bs4.element.Tag):
+                if str(value.name).__eq__("a"):
+                    value = str(value["href"])
+                else:
+                    value = None
+            else:
+                value = str(value).replace("\n","").strip()
+            keyMap[label]=value
+        
+   
+
+        infoList =soup.find(name="ul",attrs={"class":"info-list"})
+        infolis = infoList.find_all(name="li")
+   
+        for li in infolis:
+            label = li.contents[0].string
+            label = str(label).replace("：","").strip()
+            value = li.contents[1].replace("\n","")
+            value = value.strip()
+            keyMap[label]=value    
+   
+        keyObj ={
+            '执业证号': 'WorkCardNumber', 
+            '执业机构': 'LawOfficeOID', 
+            '性别': 'Sex', 
+            '年龄': 'Age', 
+            '学历': 'Education', 
+            '执业类型': 'LawyerType',
+        }
+        lawyer  = Lawyer()
+        urlList = []
+        for key in keyObj:
+            lawyer.__setattr__(keyObj[key],keyMap[key])
+        lawyerofficehref = lawyer.LawOfficeOID;
+        oid =  lawyerofficehref.split("=")[1]
+        lawyer.LawOfficeOID = oid;
+        lawyer.OID = self.id;
+        url ="http://credit.lawyers.org.cn/"+lawyerofficehref
+        toGetOfficeDetail = ToGetOfficeDetail(url=url,id=lawyer.LawOfficeOID,areaname=self.areaname)
+        lawyer.LawyerName = name
         lawyer.CityCode = self.areaname
-        lawyer.Education =  xueli
-        lawyer.ImageUrl =self.imageUrl
-        lawyer.LawOfficeOID = officeDetailID
-        lawyer.LawyerType = zhiyeliebei
-        lawyer.WorkCardNumber  = certNo
-        lawyer.LawyerName= name
-        sqFind = SqlCreate(entitys=lawyer,primaryKey="OID",keyFilter=["OID"],autoSubLine=False,tableName="t_lawyer").createSelect().addQuerys("OID","=",lawyer.OID).getSql()
-        sso = SimpleSqlOpeator(ip="192.168.196.128",port=3306,user="root",pwd="123456",dbname="lawyer_scrapy")
-        sqlresult =  sso.executeSql(sqFind,result="one")
-        if sqlresult == None:
-            sqInsert = SqlCreate(entitys=lawyer, primaryKey="OID", autoSubLine=False,tableName="t_lawyer").createInsert().getSql()
-            sso.executeSql(sqInsert,method="Insert")
-        sso.commit()
-        sso.close()
-
-
-
-        return [tgod]
+        lawyer.ImageUrl = lawyer.OID+".png"
+        urlList.append(toGetOfficeDetail)
+        toGetByte = ToGetByte(url=avtarimg,fileName=lawyer.OID+".png")
+        urlList.append(toGetByte)
+        return urlList
 
     def error(self,data):
         return True;

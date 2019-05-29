@@ -6,7 +6,7 @@ from urlseed.GetPageSize import GetPageSize
 class GetLawyerInArea(RequestData):
     def __init__(self):
         super(RequestData).__init__()
-        self.url ="https://credit.justice.gov.cn/subjects.jsp"
+        self.url ="http://credit.lawyers.org.cn/lawyer-list.jsp"
         self.methods="GET"
         self.type="html"
         self.queryString = None
@@ -16,17 +16,16 @@ class GetLawyerInArea(RequestData):
         pass
     def success(self,data):
         soup = BeautifulSoup(data.data, "html.parser")
-        filterList = soup.find_all(name="ul",attrs={"class":"filter-list"})
-        areaInfo = filterList[1].find_all(name="a")
+        # FileUtil(filepath="./image/demo.html",mode="w").saveText(data.data)
+        filterList = soup.find_all(name="ul",attrs={"class":"filter-options"})
+        areaInfo = filterList[0].find_all(name="a")
         urllist = []
-        for li in areaInfo:
-
-            if li.contents[0].__eq__("全部"):
+        for a in areaInfo:
+            textname = str(a.string).replace("\n","").strip();
+            if textname.__eq__("全部"):
                 continue
-            href = li["href"].split(",")[1].split(");")[0]
-            zoneId = str(href.replace("'","").strip())
-            areaname = str(li.contents[0])
-            gpz = GetPageSize(zoneid=zoneId,areaName=areaname)
+            zoneId = a["href"].split("'")[1].strip()
+            gpz = GetPageSize(zoneid=zoneId,areaName=textname)
             urllist.append(gpz)
         return urllist
     def error(self,data):

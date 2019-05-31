@@ -27,7 +27,7 @@ class ToGetLawyerDetail(RequestData):
 
         avtar = userInfo.find(name="dt",attrs={"class":"avatar"})
         avtarimg = avtar.find(name="img")['src']
-        avtarimg = str(avtarimg)
+        avtarimg = str(avtarimg).split("?")[0]
         name = userInfo.find(name="dd",attrs={"class":"name"}).string
         name = str(name).replace("\n","").strip()
         keyMap ={}    
@@ -88,7 +88,9 @@ class ToGetLawyerDetail(RequestData):
         }
 
     def error(self,data):
-        return True;
+        return {
+            "errorDatas": [data]
+        };
     def iserror(self,data):
         return True;
     def generate(self):

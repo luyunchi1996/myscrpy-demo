@@ -6,8 +6,7 @@ from bs4 import BeautifulSoup;
 from urlseed.ToGetLawyerDetail import ToGetLawyerDetail
 
 class ToGetLawyerInfo(RequestData):
-
-    def __init__(self,zoneid="All",areaname="",count=0):
+    def __init__(self, zoneid="All", areaname="", count=0):
         super(ToGetLawyerInfo).__init__()
         self.url ="http://credit.lawyers.org.cn/lawyer-list.jsp"
         self.methods="GET"
@@ -17,7 +16,8 @@ class ToGetLawyerInfo(RequestData):
         self.areaName = areaname
         self.count = count
         self.params = {
-            "zoneCode":zoneid
+            "zoneCode":zoneid,
+            "page":1
         };
         self.json = None;
     def success(self,data):
@@ -32,12 +32,14 @@ class ToGetLawyerInfo(RequestData):
             url="http://credit.lawyers.org.cn/"+href
             tgld=ToGetLawyerDetail(url=url,id=id,areaname = data.areaName)
             urlList.append(tgld)
-            print(href)
+
         return urlList
 
 
     def error(self,data):
-        return True;
+        return {
+            "errorDatas": [data]
+        };
     def iserror(self,data):
         return True;
     def generate(self):

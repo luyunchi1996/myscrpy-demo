@@ -36,7 +36,9 @@ class GetPageSize(RequestData):
 
 
     def error(self,data):
-        return True;
+        return {
+            "errorDatas": [data]
+        };
     def iserror(self,data):
         return True;
     def generate(self):

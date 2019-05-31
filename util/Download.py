@@ -40,19 +40,18 @@ class DownLoad():
                 print("404-retrydown:",self.requestData.url," retryTimes:",retryTimes);
                 retryTimes-=1
                 if retryTimes == 0:
-                    self.state = False
-                    print("download failed");
+                    clzName = self.requestData.__class__.__name__
+                    self.requestData.errorInfo = clzName + " throw in retryTimes overFlow response status "+ self.response.status_code
                     return self.requestData.error(self.requestData)
                 else:
                     self.downData(retryTimes=retryTimes,**kwargs)
         except BaseException as e:
-            print(e)
             print("except-retrydown:",self.requestData.url," retryTimes:",retryTimes);
             retryTimes-=1
             if retryTimes == 0:
-                self.state = False
-                print("download failed");
-                return  self.requestData.error(self.requestData)
+                clzName = self.requestData.__class__.__name__
+                self.requestData.errorInfo = clzName + " throw in excption: [ "+str(e)+" ] response status "
+                return self.requestData.error(self.requestData)
             else:
                 self.downData(retryTimes=retryTimes,**kwargs)
             pass
@@ -74,6 +73,8 @@ class DownLoad():
                 return self.state
             return True
         else:
+            clzName = self.requestData.__class__.__name__
+            self.requestData.errorInfo = clzName +" throw in iserror func"
             return self.requestData.error(self.requestData)
     
     def getMethod(self):

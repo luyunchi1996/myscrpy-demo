@@ -21,5 +21,5 @@ def getClassList():
         "ToGetOfficeDetail":ToGetOfficeDetail}
 
 def  getSeedClass():
-#       return [ToGetOfficeDetail]
+#       return [ToGetLawyerDetail]
      return [GetLawyerInArea]

@@ -10,7 +10,7 @@ from urlseed.ToGetImage import ToGetByte;
 
 
 class ToGetLawyerDetail(RequestData):
-    def __init__(self,url="",id="",areaname = ""):
+    def __init__(self,url="http://credit.lawyers.org.cn/lawyer.jsp?id=1dd45a7e1a574af2b18efdfb883398e8",id="1dd45a7e1a574af2b18efdfb883398e8",areaname = "黄浦"):
         super(ToGetLawyerDetail).__init__()
         self.url =url
         self.id = id
@@ -32,13 +32,16 @@ class ToGetLawyerDetail(RequestData):
         name = str(name).replace("\n","").strip()
         keyMap ={}    
         infos = userInfo.find_all(name="dd",attrs={"class":"info"})
+        officeName = ""
         for dd in infos:
             label = dd.contents[0].string
             label = str(label).replace("：","").strip()
             value = dd.contents[1]
             if isinstance(value,bs4.element.Tag):
                 if str(value.name).__eq__("a"):
+                    officeName = str(value.string)
                     value = str(value["href"])
+                     
                 else:
                     value = None
             else:
@@ -78,6 +81,7 @@ class ToGetLawyerDetail(RequestData):
         lawyerofficehref = lawyer.LawOfficeOID;
         oid =  lawyerofficehref.split("=")[1]
         lawyer.LawOfficeOID = oid;
+        lawyer.OfficeName = officeName;
         lawyer.OID = self.id;
         url ="http://credit.lawyers.org.cn/"+lawyerofficehref
         toGetOfficeDetail = ToGetOfficeDetail(url=url,id=lawyer.LawOfficeOID,areaname=self.areaname)
@@ -85,6 +89,7 @@ class ToGetLawyerDetail(RequestData):
         lawyer.CityCode = self.areaname
         lawyer.ImageUrl = lawyer.OID+".png"
         urlList.append(toGetOfficeDetail)
+        
         toGetByte = ToGetByte(url=avtarimg,fileName=lawyer.OID+".png")
         urlList.append(toGetByte)
         

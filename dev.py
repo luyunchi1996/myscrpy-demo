@@ -4,7 +4,7 @@ import time
 import urlseed.UrlSeedClzLoader;
 import json
 from redis import StrictRedis
-
+import config
 
 
 
@@ -15,7 +15,7 @@ requestFactory = RequestFactory(urlSeedList=classList);
 def func(res,urlQueue,dataProcessQueue,errorDataQuene):
     d = DownLoad(requestData=res);
     result = d.downData(headers={
-        "user-agent":""
+        "user-agent": config.user_agent[0]
     },timeout=60,verify=False);
 
     if  isinstance(result,list):
@@ -55,7 +55,8 @@ def main():
 
     waitFlag = []
     datawaitFlag = []
-    redis = StrictRedis(host='192.168.196.128', port=6380, db=0, password='123456')
+    redis = StrictRedis(host=config.redis["host"] , port=config.redis["port"], db=config.redis["db"], 
+  password=config.redis["password"])
 
 
     for rf in requestFactory.requestInstance():

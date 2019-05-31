@@ -10,3 +10,4 @@ class Lawyer:
         self.ImageUrl=""
         self.LawyerType=""
         self.Education=""
+        self.OfficeName=""

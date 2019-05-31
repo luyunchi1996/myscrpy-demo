@@ -75,6 +75,7 @@ def p1():
     while  True:
         for k in range(0,10):
             if redisconet.llen("urlList")<=0:
+                
                 continue
             request =redisconet.brpop("urlList")
             dicts = jsonToDict(request)
@@ -96,11 +97,10 @@ def main():
     urlquene =Queue()
     dataqueue = Queue()
     errorqueue = Queue()
-    
-    requestFactory = RequestFactory(urlSeedList=classList);
-    for rf in requestFactory.requestInstance():
-        downData(rf)
-    # p1()
+    if redisconet.llen("urlList") == 0:
+        requestFactory = RequestFactory(urlSeedList=classList);
+        for rf in requestFactory.requestInstance():
+            downData(rf)
     process1 = Process(target=p1,args=())
     # process2 = Process(target=p2,args=(urlquene,))
     process1.start()

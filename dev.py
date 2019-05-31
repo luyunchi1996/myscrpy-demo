@@ -15,7 +15,7 @@ requestFactory = RequestFactory(urlSeedList=classList);
 def func(res,urlQueue,dataProcessQueue,errorDataQuene):
     d = DownLoad(requestData=res);
     result = d.downData(headers={
-        "user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+        "user-agent":""
     },timeout=60,verify=False);
 
     if  isinstance(result,list):

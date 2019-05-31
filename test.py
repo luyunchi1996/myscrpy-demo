@@ -3,7 +3,7 @@ from util import DownLoad
 import time
 import urlseed.UrlSeedClzLoader;
 import json
-
+import config
 from redis import StrictRedis
 import  multiprocessing
 
@@ -15,7 +15,8 @@ classList = urlseed.UrlSeedClzLoader.getSeedClass()
 clzMap = urlseed.UrlSeedClzLoader.getClassList()
 
 # requestFactory = RequestFactory(urlSeedList=classList);
-redisconet = StrictRedis(host='192.168.222.128', port=6380, db=0, password='123456')
+redisconet = StrictRedis(host=config.redis["host"] , port=config.redis["port"], db=config.redis["db"], 
+  password=config.redis["password"])
 def jsonToDict(jsonStr):
     st = bytes.decode(jsonStr[1],"utf-8")
     return json.loads(st)
@@ -37,7 +38,7 @@ def downData(res):
 
     d = DownLoad(requestData=res);
     result = d.downData(headers={
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+        "user-agent": config.user_agent[0]
     }, timeout=60, verify=False);
     if  isinstance(result,list):
         subRequestFactory = RequestFactory(urlSeedList=result)

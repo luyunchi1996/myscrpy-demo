@@ -40,11 +40,18 @@ class ToGetOfficeDetail(RequestData):
         infolis = infoList.find_all(name="li")
    
         for li in infolis:
-            label = li.contents[0].string
-            label = str(label).replace("：","").strip()
-            value = li.contents[1].replace("\n","")
-            value = value.strip()
-            keyMap[label]=value   
+            if len(li.contents) == 1:
+                label = li.contents[0].string
+                label = str(label).replace("：","").strip()
+                keyMap[label]=value
+            elif len(li.contents) > 1:
+                label = li.contents[0].string
+                label = str(label).replace("：","").strip()
+                value = li.contents[1].replace("\n","")
+                value = value.strip()
+                keyMap[label]=value
+
+            
         keyObj ={
             '执业证号': 'certNO', 
             '通讯地址': 'Address',  

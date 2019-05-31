@@ -3,7 +3,7 @@ import json;
 from util.RequestData import RequestData;
 from multiprocessing import Process
 import multiprocessing
-
+import traceback
 from util import RequestFactory
 import time
 
@@ -36,24 +36,25 @@ class DownLoad():
             self.response = response
             if self.complete():
                 return self.success();
+                
             else:
                 print("404-retrydown:",self.requestData.url," retryTimes:",retryTimes);
                 retryTimes-=1
-                if retryTimes == 0:
+                if retryTimes <= 0:
                     clzName = self.requestData.__class__.__name__
-                    self.requestData.errorInfo = clzName + " throw in retryTimes overFlow response status "+ self.response.status_code
+                    self.requestData.errorInfo = clzName + " throw in retryTimes overFlow response status "+ str(self.response.status_code)
                     return self.requestData.error(self.requestData)
                 else:
-                    self.downData(retryTimes=retryTimes,**kwargs)
+                    return self.downData(retryTimes=retryTimes,**kwargs)
         except BaseException as e:
             print("except-retrydown:",self.requestData.url," retryTimes:",retryTimes);
             retryTimes-=1
-            if retryTimes == 0:
+            if retryTimes <= 0:
                 clzName = self.requestData.__class__.__name__
-                self.requestData.errorInfo = clzName + " throw in excption: [ "+str(e)+" ] response status "
+                self.requestData.errorInfo = clzName + " throw in excption: [ "+str(traceback.format_exc())+" ] response status "
                 return self.requestData.error(self.requestData)
             else:
-                self.downData(retryTimes=retryTimes,**kwargs)
+                return self.downData(retryTimes=retryTimes,**kwargs)
             pass
         return self
     

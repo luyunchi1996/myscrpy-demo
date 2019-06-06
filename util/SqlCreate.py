@@ -78,15 +78,34 @@ class SqlCreate(Query):
     def getInsertSql(self):
         dbkey=[]
         dbvalue=[]
-        for k in self.objMap:
-            
-            if self.objMap[k]!=None:
-              dbkey.append(k)
-              val=self.objMap[k]
-              dbvalue.append("'"+str(val)+"'")
+        if len(self.keyFilter) == 0:
+            dbkey.append(self.primaryKey)
+            dbvalue.append("'"+str(self.primaryKeyData[self.primaryKey])+"'" )
+            for k1 in self.objMap:
+                if self.objMap[k1]=="":
+                    continue
+                if self.objMap[k1]!=None:
+                    dbkey.append(k1)
+                    val=self.objMap[k1]
+                    dbvalue.append("'"+str(val)+"'")
+        else:
+            for key  in self.keyFilter:
+                if self.autoSubLine:
+                   key = self.changeVariableName(key)
 
-        
-        INSERT_SQL = r"INSERT INTO "+self.tableName+" ("+self.primaryKey+","+",".join(dbkey)+") VALUES ('"+str(self.primaryKeyData[self.primaryKey])+"',"+",".join(dbvalue)+");"
+
+                if self.objMap[key]=="":
+                    continue
+
+                if self.objMap[key]!=None:
+                    dbkey.append(key)
+                    val=self.objMap[key]
+                    dbvalue.append("'"+str(val)+"'")
+                pass
+            pass
+
+
+        INSERT_SQL = r"INSERT INTO "+self.tableName+" ("+",".join(dbkey)+") VALUES ("+",".join(dbvalue)+");"
 
         return INSERT_SQL;
     def getUpdateSql(self):
